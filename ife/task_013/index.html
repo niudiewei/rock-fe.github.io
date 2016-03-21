@@ -20,11 +20,16 @@
   在事件处理函数中
   获取aqi-input输入的值，并显示在aqi-display中
   */
-  var button = document.getElementById('button');
-  button.onclick = function() {
-    var apiValue = parseInt(document.getElementById('aqi-input').value);
+  var elements = {
+    button: document.getElementById('button'),
+    input: document.getElementById('aqi-input'),
+    display: document.getElementById('aqi-display'),
+  }
+
+  elements.button.onclick = function() {
+    var apiValue = parseInt(elements.input.value);
     if (apiValue >=1 && apiValue <= 100 && typeof(apiValue) === 'number') {
-      document.getElementById('aqi-display').textContent = apiValue;
+      elements.display.textContent = apiValue;
     } else {
       alert('请输入介于1～100的值');
     }
