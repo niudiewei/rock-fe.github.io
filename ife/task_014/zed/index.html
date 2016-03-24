@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+  </head>
+<body>
+
+  <h3>污染城市列表</h3>
+  <ul id="aqi-list">
+<!--   
+    <li>第一名：福州（样例），10</li>
+  	<li>第二名：福州（样例），10</li> -->
+  </ul>
+  <input id="filter" type="text" placeholder="输入介于1～100值">
+  <button id="button">确认</button>
+  <p>污染程度大于 <bold><span id="ipt">1</span></bold> 的城市</p>
+  <ul id="filter-list">
+<!--   
+    <li>第一名：福州（样例），10</li>
+  	<li>第二名：福州（样例），10</li> -->
+  </ul>
+
+<script type="text/javascript">
+
+var aqiData = [
+  ["北京", 90],
+  ["上海", 50],
+  ["福州", 10],
+  ["广州", 50],
+  ["成都", 90],
+  ["西安", 100]
+];
+
+(function () {
+
+  /*
+  在注释下方编写代码
+  遍历读取aqiData中各个城市的数据
+  将空气质量指数大于60的城市显示到aqi-list的列表中
+  */
+
+  aqiData.sort(function(a, b) {return b[1] - a[1]});
+
+  var elements = {
+    button: document.getElementById("button"),
+    aqiList: document.getElementById("aqi-list"),
+    filter: document.getElementById("filter"),
+    filterList: document.getElementById("filter-list"),
+    ipt: document.getElementById("ipt"),
+  }
+  var lth = aqiData.length;
+  var rankString = "一二三四五六";
+
+  for (var i = 0; i < lth; i++) {
+    elements.aqiList.innerHTML += `<li> 第${rankString[i]}名：${aqiData[i][0]}，${aqiData[i][1]}</li>`;
+    elements.filterList.innerHTML += `<li> 第${rankString[i]}名：${aqiData[i][0]}，${aqiData[i][1]}</li>`;
+  }
+
+  var iptValue = parseInt(elements.ipt.value);
+  elements.button.onclick = function() {
+    var filterValue = parseInt(elements.filter.value);
+    elements.filterList.innerHTML = "";
+    if (filterValue >= 1 && filterValue <= 100 && typeof(filterValue) === "number") {
+      elements.ipt.textContent = filterValue || 1;
+      iptValue = parseInt(elements.ipt.textContent);
+      for (var i = 0; i < lth; i++) {
+        if (aqiData[i][1] > iptValue) {
+          elements.filterList.innerHTML += `<li> 第${rankString[i]}名：${aqiData[i][0]}，${aqiData[i][1]}</li>`;
+        }
+      }
+    } else {
+      elements.ipt.textContent = filterValue || 1;
+      elements.filterList.innerHTML = '<p>没有符合条件的城市</p>';
+      alert("请输入介于1～100的过滤值");
+    }
+  }
+})();
+
+</script>
+</body>
+</html>
